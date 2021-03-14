@@ -1,3 +1,7 @@
+:root {
+    --highlight-color: rgb(80, 80, 80);
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

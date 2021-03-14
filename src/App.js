@@ -7,17 +7,26 @@ function App () {
   
   return (
     <div className="w-screen h-screen">
+      <Header />
       <div className="flex flex-col text-center h-full w-full">
         <div className="flex-grow"></div>
         <div className="flex flex-row text-center w-full">
           <div className="flex-grow"></div>
-          <div className="w-72 h-72">
+          <div className="w-90 h-90">
             <Game />
           </div>
           <div className="flex-grow"></div>
         </div>
         <div className="flex-grow"></div>
       </div>
+    </div>
+  )
+}
+
+function Header() {
+  return (
+    <div className="w-screen h-27 absolute top-0 left-0 bg-blue-500">
+      <h1 className="w-full text-center my-6 font-extrabold text-6xl text-blue text-white">Ultimate TicTacToe</h1>
     </div>
   )
 }
@@ -182,10 +191,13 @@ class Board extends React.Component {
       )
     }
 
-    let classes = "w-1/3 h-1/3 border-2 border-gray-800 flex-board relative"
+    let classes = "w-1/3 h-1/3 border-2 border-gray-800 flex-board relative transition-all duration-200 highlight-default"
 
     if (this.isFull() || this.hasWon() !== '') {
       classes = classes + " bg-gray-300"
+    }
+    if (this.props.active === true) {
+      classes = classes + " highlight"
     }
 
     return (
@@ -201,7 +213,7 @@ function Square (props) {
   return (
     <div className="w-1/3 h-1/3 border border-gray-400 flex flex-col float-left" onClick={function (e) { props.onClick(props.index) }}>
       <div className="flex-grow"></div>
-      <p className="text-center cursor-default leading-none align-middle text-xl">{props.value}</p>
+      <p className="text-center cursor-default leading-none align-middle text-3xl">{props.value}</p>
       <div className="flex-grow"></div>
     </div>
   )

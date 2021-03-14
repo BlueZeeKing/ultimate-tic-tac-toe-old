@@ -5,6 +5,13 @@ module.exports = {
     extend: {
       height: {
         screen: 'calc(var(--vh) * 100)'
+      },
+      transitionDelay: {
+        '2000': '4000ms'
+      },
+      spacing: {
+        '27': '6.75rem',
+        '90': '22.5rem'
       }
     },
   },
