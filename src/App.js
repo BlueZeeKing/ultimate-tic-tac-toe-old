@@ -2,9 +2,22 @@ import React from 'react';
 import './App.css';
 
 function App () {
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+  
   return (
-    <div className="w-72 h-72">
-      <Game />
+    <div className="w-screen h-screen">
+      <div className="flex flex-col text-center h-full w-full">
+        <div className="flex-grow"></div>
+        <div className="flex flex-row text-center w-full">
+          <div className="flex-grow"></div>
+          <div className="w-72 h-72">
+            <Game />
+          </div>
+          <div className="flex-grow"></div>
+        </div>
+        <div className="flex-grow"></div>
+      </div>
     </div>
   )
 }
@@ -85,7 +98,7 @@ class Game extends React.Component {
     });
 
     return (
-      <div className="w-full h-full border-2 border-gray-800">
+      <div className="w-full h-full border-2 border-gray-800 flex flex-row flex-wrap">
         {board}
       </div>
     )
@@ -163,7 +176,7 @@ class Board extends React.Component {
       )
     }
 
-    let classes = "w-1/3 h-1/3 border-2 border-gray-800 float-left relative"
+    let classes = "w-1/3 h-1/3 border-2 border-gray-800 flex-board relative"
 
     if (this.isFull() || this.hasWon() !== '') {
       classes = classes + " bg-gray-300"
