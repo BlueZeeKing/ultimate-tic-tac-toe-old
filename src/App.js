@@ -1,14 +1,12 @@
 import React from 'react';
 import './App.css';
 
-class App extends React.Component {
-  render () {
-    return (
-      <div className="w-72 h-72">
-        <Game />
-      </div>
-    )
-  }
+function App () {
+  return (
+    <div className="w-72 h-72">
+      <Game />
+    </div>
+  )
 }
 
 class Game extends React.Component {
@@ -76,7 +74,7 @@ class Game extends React.Component {
 
     this.setState(state)
 
-    console.log(board, index, winner, open, board)
+    console.log(this.isFull(), this.hasWon())
   }
 
   render() {
@@ -134,7 +132,7 @@ class Board extends React.Component {
   }
 
   handleClick (e) {
-    if (this.props.active && this.state.open) {
+    if (this.props.active && this.state.open && this.state.board[e] === '') {
       let state = this.state
 
       state.board[e] = this.props.currentTurn
@@ -143,8 +141,6 @@ class Board extends React.Component {
       this.setState(state)
 
       this.props.doneHandler(this.props.index, e, this.hasWon(), state.open, state.board)
-
-      console.log(e)
     }
   }
 
@@ -161,7 +157,7 @@ class Board extends React.Component {
       cover = (
         <div className="w-full h-full absolute top-0 left-0 flex flex-col">
           <div className="flex-grow"></div>
-          <p className="text-center cursor-default text-6xl leading-none align-middle opacity-50">{this.hasWon()}</p>
+          <p className="text-center cursor-default text-6xl leading-none align-middle opacity-70">{this.hasWon()}</p>
           <div className="flex-grow"></div>
         </div>
       )
@@ -169,8 +165,8 @@ class Board extends React.Component {
 
     let classes = "w-1/3 h-1/3 border-2 border-gray-800 float-left relative"
 
-    if (this.isFull()) {
-      classes = classes + " bg-gray-200"
+    if (this.isFull() || this.hasWon() !== '') {
+      classes = classes + " bg-gray-300"
     }
 
     return (
