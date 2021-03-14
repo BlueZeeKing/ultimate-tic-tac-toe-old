@@ -17,6 +17,7 @@ class Game extends React.Component {
 
     this.state = {
       board: [['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', '']],
+      boardStatus: ['', '', '', '', '', '', '', '', ''],
       active: 10,
       currentTurn: 'x'
     }
@@ -25,40 +26,52 @@ class Game extends React.Component {
   }
 
   isFull() {
-    return this.state.board.filter(function (item) { return item === '' }).length === 0
+    return !(this.state.boardStatus.filter(function (item) { return item === 'f' }).length === 9)
   }
 
   hasWon() {
-    if (this.state.board[0] === this.state.board[1] && this.state.board[0] === this.state.board[2]) {
-      return this.state.board[0]
-    } else if (this.state.board[3] === this.state.board[4] && this.state.board[3] === this.state.board[5]) {
-      return this.state.board[3]
-    } else if (this.state.board[6] === this.state.board[7] && this.state.board[6] === this.state.board[8]) {
-      return this.state.board[6]
-    } else if (this.state.board[0] === this.state.board[3] && this.state.board[0] === this.state.board[6]) {
-      return this.state.board[0]
-    } else if (this.state.board[1] === this.state.board[4] && this.state.board[1] === this.state.board[7]) {
-      return this.state.board[1]
-    } else if (this.state.board[2] === this.state.board[5] && this.state.board[2] === this.state.board[8]) {
-      return this.state.board[2]
-    } else if (this.state.board[0] === this.state.board[4] && this.state.board[0] === this.state.board[8]) {
-      return this.state.board[0]
-    } else if (this.state.board[2] === this.state.board[4] && this.state.board[2] === this.state.board[6]) {
-      return this.state.board[2]
+    if (this.state.boardStatus[0] === this.state.boardStatus[1] && this.state.boardStatus[0] === this.state.boardStatus[2]) {
+      return this.state.boardStatus[0]
+    } else if (this.state.boardStatus[3] === this.state.boardStatus[4] && this.state.boardStatus[3] === this.state.boardStatus[5]) {
+      return this.state.boardStatus[3]
+    } else if (this.state.boardStatus[6] === this.state.boardStatus[7] && this.state.boardStatus[6] === this.state.boardStatus[8]) {
+      return this.state.boardStatus[6]
+    } else if (this.state.boardStatus[0] === this.state.boardStatus[3] && this.state.boardStatus[0] === this.state.boardStatus[6]) {
+      return this.state.boardStatus[0]
+    } else if (this.state.boardStatus[1] === this.state.boardStatus[4] && this.state.boardStatus[1] === this.state.boardStatus[7]) {
+      return this.state.boardStatus[1]
+    } else if (this.state.boardStatus[2] === this.state.boardStatus[5] && this.state.boardStatus[2] === this.state.boardStatus[8]) {
+      return this.state.boardStatus[2]
+    } else if (this.state.boardStatus[0] === this.state.boardStatus[4] && this.state.boardStatus[0] === this.state.boardStatus[8]) {
+      return this.state.boardStatus[0]
+    } else if (this.state.boardStatus[2] === this.state.boardStatus[4] && this.state.boardStatus[2] === this.state.boardStatus[6]) {
+      return this.state.boardStatus[2]
     } else {
       return ''
     }
   }
 
-  doneHandler(index, winner, open, board) {
-    console.log(index, winner, open, board)
+  doneHandler(board, index, winner, open, boardData) {
+    let state = this.state
+
+    state.board[board] = boardData
+
+    if (open === false && winner != '') {
+      state.boardStatus[board] = winner
+    } else if (open === false) {
+      state.boardStatus[board] = 'f'
+    }
+
+    this.setState(state)
+
+    console.log(board, index, winner, open, board)
   }
 
   render() {
     let board = []
 
     this.state.board.forEach((element, index) => {
-      board.push(<Board key={index} active={this.state.active === index || this.state.active === 10} currentTurn={this.state.currentTurn} doneHandler={this.doneHandler} board={element} />)
+      board.push(<Board key={index} index={index} active={this.state.active === index || this.state.active === 10} currentTurn={this.state.currentTurn} doneHandler={this.doneHandler} board={element} />)
     });
 
     return (
@@ -117,7 +130,7 @@ class Board extends React.Component {
 
       this.setState(state)
 
-      this.props.doneHandler(e, this.hasWon(), state.open, state.board)
+      this.props.doneHandler(this.props.index, e, this.hasWon(), state.open, state.board)
 
       console.log(e)
     }
