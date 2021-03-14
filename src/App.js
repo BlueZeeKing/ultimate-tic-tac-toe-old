@@ -5,7 +5,65 @@ class App extends React.Component {
   render () {
     return (
       <div className="w-72 h-72">
-        <Board active={true} currentTurn={'x'} doneHandler={console.log} board={['', '', '', '', '', '', '', '', '']} />
+        <Game />
+      </div>
+    )
+  }
+}
+
+class Game extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      board: [['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', '']],
+      active: 10,
+      currentTurn: 'x'
+    }
+
+    this.doneHandler = this.doneHandler.bind(this);
+  }
+
+  isFull() {
+    return this.state.board.filter(function (item) { return item === '' }).length === 0
+  }
+
+  hasWon() {
+    if (this.state.board[0] === this.state.board[1] && this.state.board[0] === this.state.board[2]) {
+      return this.state.board[0]
+    } else if (this.state.board[3] === this.state.board[4] && this.state.board[3] === this.state.board[5]) {
+      return this.state.board[3]
+    } else if (this.state.board[6] === this.state.board[7] && this.state.board[6] === this.state.board[8]) {
+      return this.state.board[6]
+    } else if (this.state.board[0] === this.state.board[3] && this.state.board[0] === this.state.board[6]) {
+      return this.state.board[0]
+    } else if (this.state.board[1] === this.state.board[4] && this.state.board[1] === this.state.board[7]) {
+      return this.state.board[1]
+    } else if (this.state.board[2] === this.state.board[5] && this.state.board[2] === this.state.board[8]) {
+      return this.state.board[2]
+    } else if (this.state.board[0] === this.state.board[4] && this.state.board[0] === this.state.board[8]) {
+      return this.state.board[0]
+    } else if (this.state.board[2] === this.state.board[4] && this.state.board[2] === this.state.board[6]) {
+      return this.state.board[2]
+    } else {
+      return ''
+    }
+  }
+
+  doneHandler(index, winner, open, board) {
+    console.log(index, winner, open, board)
+  }
+
+  render() {
+    let board = []
+
+    this.state.board.forEach((element, index) => {
+      board.push(<Board key={index} active={this.state.active === index || this.state.active === 10} currentTurn={this.state.currentTurn} doneHandler={this.doneHandler} board={element} />)
+    });
+
+    return (
+      <div className="w-full h-full border-2 border-gray-800">
+        {board}
       </div>
     )
   }
@@ -18,8 +76,6 @@ class Board extends React.Component {
     this.state = {
       board: props.board,
     }
-
-    console.log(this.isFull())
 
     this.state.open = !this.isFull() && (this.hasWon() === '')
 
@@ -75,7 +131,7 @@ class Board extends React.Component {
     });
 
     return (
-      <div className="w-1/3 h-1/3 border-2 border-gray-800">
+      <div className="w-1/3 h-1/3 border-2 border-gray-800 float-left">
         {board}
       </div>
     )
