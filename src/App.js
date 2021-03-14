@@ -30,7 +30,8 @@ class Game extends React.Component {
       board: [['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', '']],
       boardStatus: ['', '', '', '', '', '', '', '', ''],
       active: 10,
-      currentTurn: 'X'
+      currentTurn: 'X',
+      msg: 'It\'s X\'s Turn'
     }
 
     this.doneHandler = this.doneHandler.bind(this);
@@ -69,8 +70,10 @@ class Game extends React.Component {
 
     if (open === false && winner !== '') {
       state.boardStatus[board] = winner
+      state.msg = `The winner is ${winner}`
     } else if (open === false) {
       state.boardStatus[board] = 'f'
+      state.msg = 'Tie Game'
     }
 
     if (state.currentTurn === 'X') {
@@ -78,6 +81,8 @@ class Game extends React.Component {
     } else {
       state.currentTurn = 'X'
     }
+
+    state.msg = `It's ${state.currentTurn}'s Turn`
 
     state.active = index
 
@@ -100,6 +105,7 @@ class Game extends React.Component {
     return (
       <div className="w-full h-full border-2 border-gray-800 flex flex-row flex-wrap">
         {board}
+        <h3 className="text-2xl text-center font-bold w-full my-2">{this.state.msg}</h3>
       </div>
     )
   }
@@ -195,7 +201,7 @@ function Square (props) {
   return (
     <div className="w-1/3 h-1/3 border border-gray-400 flex flex-col float-left" onClick={function (e) { props.onClick(props.index) }}>
       <div className="flex-grow"></div>
-      <p className="text-center cursor-default leading-none align-middle">{props.value}</p>
+      <p className="text-center cursor-default leading-none align-middle text-xl">{props.value}</p>
       <div className="flex-grow"></div>
     </div>
   )
