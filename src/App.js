@@ -4,7 +4,9 @@ import './App.css';
 class App extends React.Component {
   render () {
     return (
-      <Board />
+      <div className="w-72 h-72">
+        <Board active={true} currentTurn={'x'} doneHandler={console.log} board={['', '', '', '', '', '', '', '', '']} />
+      </div>
     )
   }
 }
@@ -14,8 +16,10 @@ class Board extends React.Component {
     super(props)
 
     this.state = {
-      board: ['', '', '', '', '', '', '', '', '']
+      board: props.board
     }
+
+    this.handleClick = this.handleClick.bind(this);
   }
 
   isFull () {
@@ -45,18 +49,20 @@ class Board extends React.Component {
   }
 
   handleClick (e) {
-    console.log(e)
+    if (this.props.active) {
+      console.log(e)
+    }
   }
 
   render () {
     let board = []
 
     this.state.board.forEach((element, index) => {
-      board.push(<Square key={index} onClick={this.handleClick} value={element}></Square>)
+      board.push(<Square index={index} key={index} onClick={this.handleClick} value={element}></Square>)
     });
 
     return (
-      <div>
+      <div className="w-1/3 h-1/3 border-2 border-gray-800">
         {board}
       </div>
     )
@@ -65,7 +71,11 @@ class Board extends React.Component {
 
 function Square (props) {
   return (
-    <p className="square" onClick={props.onClick}>{props.value}</p>
+    <div className="w-1/3 h-1/3 border border-gray-400 flex flex-col float-left" onClick={function (e) { props.onClick(props.index) }}>
+      <div className="flex-grow"></div>
+      <p className="text-center">{props.value}</p>
+      <div className="flex-grow"></div>
+    </div>
   )
 }
 
