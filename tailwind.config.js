@@ -10,6 +10,7 @@ module.exports = {
         '2000': '4000ms'
       },
       spacing: {
+        '18': '4.5rem',
         '27': '6.75rem',
         '90': '22.5rem'
       }

@@ -6,6 +6,16 @@ class App extends React.Component {
   constructor(props) {
     super(props)
 
+    let settings = JSON.parse(localStorage.getItem('settings'))
+
+    if (settings !== null) {
+      if (!settings.toggle) {
+        document.documentElement.style.setProperty('--highlight-color', 'rgba(255, 255, 255, 0)');
+      } else {
+        document.documentElement.style.setProperty('--highlight-color', settings.color);
+      }
+    }
+
     this.state = { settings: false }
 
     this.openSettings = this.openSettings.bind(this)
@@ -53,8 +63,8 @@ function Header(props) {
   return (
     <div className="w-screen absolute top-0 left-0 bg-blue-500">
       <div className="relative">
-        <button className="material-icons transition-all duration-200 cursor-pointer absolute top-0 left-0 m-4 text-4xl md:text-5xl lg:text-6xl text-white outline-none focus:outline-none" onClick={props.onClick}>settings</button>
-        <h1 className="w-full text-center py-4 font-extrabold text-4xl md:text-5xl lg:text-6xl text-blue text-white">Ultimate TicTacToe</h1>
+        <button className="h-18 md:h-auto material-icons transition-all duration-200 cursor-pointer absolute top-0 left-0 m-4 my-2 md:m-4 text-4xl md:text-5xl lg:text-6xl text-white outline-none focus:outline-none" onClick={props.onClick}>settings</button>
+        <h1 className="px-16 w-full text-center py-2 md:py-4 font-extrabold text-3xl md:text-5xl lg:text-6xl text-blue text-white">Ultimate TicTacToe</h1>
       </div>
     </div>
   )
@@ -64,10 +74,14 @@ class Settings extends React.Component {
   constructor (props) {
     super(props)
 
-    this.state = {
-      color: '#505050',
-      toggle: true
+    if (localStorage.getItem("settings") === null) {
+      localStorage.setItem("settings", JSON.stringify({
+        color: '#505050',
+        toggle: true
+      }))
     }
+
+    this.state = JSON.parse(localStorage.getItem('settings'))
 
     this.handleColor = this.handleColor.bind(this)
     this.handleToggle = this.handleToggle.bind(this)
@@ -86,16 +100,16 @@ class Settings extends React.Component {
     })
 
     console.log(e.target.checked)
+  }
 
-    if (!e.target.checked) {
+  close() {
+    if (!this.state.toggle) {
       document.documentElement.style.setProperty('--highlight-color', 'rgba(255, 255, 255, 0)');
     } else {
       document.documentElement.style.setProperty('--highlight-color', this.state.color);
     }
-  }
 
-  close() {
-    document.documentElement.style.setProperty('--highlight-color', this.state.color);
+    localStorage.setItem("settings", JSON.stringify(this.state))
 
     this.props.close()
   }
