@@ -25,8 +25,11 @@ function App () {
 
 function Header() {
   return (
-    <div className="w-screen h-27 absolute top-0 left-0 bg-blue-500">
-      <h1 className="w-full text-center my-6 font-extrabold text-6xl text-blue text-white">Ultimate TicTacToe</h1>
+    <div className="w-screen absolute top-0 left-0 bg-blue-500">
+      <div className="relative">
+        <span className="material-icons absolute top-0 left-0 m-4 text-4xl md:text-5xl lg:text-6xl text-white">settings</span>
+        <h1 className="w-full text-center py-4 font-extrabold text-4xl md:text-5xl lg:text-6xl text-blue text-white">Ultimate TicTacToe</h1>
+      </div>
     </div>
   )
 }
@@ -100,8 +103,6 @@ class Game extends React.Component {
     }
 
     this.setState(state)
-
-    console.log(this.isFull(), this.hasWon())
   }
 
   render() {
@@ -138,21 +139,21 @@ class Board extends React.Component {
   }
 
   hasWon() {
-    if (this.state.board[0] === this.state.board[1] && this.state.board[0] === this.state.board[2]) {
+    if (this.state.board[0] !== '' && this.state.board[0] === this.state.board[1] && this.state.board[0] === this.state.board[2]) {
       return this.state.board[0]
-    } else if (this.state.board[3] === this.state.board[4] && this.state.board[3] === this.state.board[5]) {
+    } else if (this.state.board[3] !== '' && this.state.board[3] === this.state.board[4] && this.state.board[3] === this.state.board[5]) {
       return this.state.board[3]
-    } else if (this.state.board[6] === this.state.board[7] && this.state.board[6] === this.state.board[8]) {
+    } else if (this.state.board[6] !== '' && this.state.board[6] === this.state.board[7] && this.state.board[6] === this.state.board[8]) {
       return this.state.board[6]
-    } else if (this.state.board[0] === this.state.board[3] && this.state.board[0] === this.state.board[6]) {
+    } else if (this.state.board[0] !== '' && this.state.board[0] === this.state.board[3] && this.state.board[0] === this.state.board[6]) {
       return this.state.board[0]
-    } else if (this.state.board[1] === this.state.board[4] && this.state.board[1] === this.state.board[7]) {
+    } else if (this.state.board[1] !== '' && this.state.board[1] === this.state.board[4] && this.state.board[1] === this.state.board[7]) {
       return this.state.board[1]
-    } else if (this.state.board[2] === this.state.board[5] && this.state.board[2] === this.state.board[8]) {
+    } else if (this.state.board[2] !== '' && this.state.board[2] === this.state.board[5] && this.state.board[2] === this.state.board[8]) {
       return this.state.board[2]
-    } else if (this.state.board[0] === this.state.board[4] && this.state.board[0] === this.state.board[8]) {
+    } else if (this.state.board[0] !== '' && this.state.board[0] === this.state.board[4] && this.state.board[0] === this.state.board[8]) {
       return this.state.board[0]
-    } else if (this.state.board[2] === this.state.board[4] && this.state.board[2] === this.state.board[6]) {
+    } else if (this.state.board[2] !== '' && this.state.board[2] === this.state.board[4] && this.state.board[2] === this.state.board[6]) {
       return this.state.board[2]
     } else {
       return ''
@@ -165,10 +166,11 @@ class Board extends React.Component {
 
       state.board[e] = this.props.currentTurn
       state.open = !this.isFull() && (this.hasWon() === '')
-
+      console.log(this.state, this.hasWon())
       this.setState(state)
 
       this.props.doneHandler(this.props.index, e, this.hasWon(), state.open, state.board)
+
     }
   }
 
@@ -185,7 +187,7 @@ class Board extends React.Component {
       cover = (
         <div className="w-full h-full absolute top-0 left-0 flex flex-col">
           <div className="flex-grow"></div>
-          <p className="text-center cursor-default text-6xl leading-none align-middle opacity-70">{this.hasWon()}</p>
+          <p className="text-center cursor-default text-8xl leading-none align-middle opacity-70">{this.hasWon()}</p>
           <div className="flex-grow"></div>
         </div>
       )
@@ -196,10 +198,11 @@ class Board extends React.Component {
     if (this.isFull() || this.hasWon() !== '') {
       classes = classes + " bg-gray-300"
     }
-    if (this.props.active === true) {
+    if (this.props.active === true && this.state.open) {
       classes = classes + " highlight"
     }
 
+    //console.log(this.hasWon())
     return (
       <div className={classes}>
         {board}
