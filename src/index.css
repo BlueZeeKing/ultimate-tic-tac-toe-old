@@ -1,5 +1,5 @@
 :root {
-    --highlight-color: lime;
+    --highlight-color: rgb(80, 80, 80);
 }
 
 @tailwind base;
