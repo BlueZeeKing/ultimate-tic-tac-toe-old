@@ -57,3 +57,8 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+.height {
+  height: 34px;
+  line-height: 34px;
+}
