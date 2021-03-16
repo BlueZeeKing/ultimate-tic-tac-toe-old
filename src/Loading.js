@@ -47,6 +47,7 @@ function Loader () {
         <div className="stick"></div>
         <div className="ball"></div>
       </div>
+      <p className="text-xl text-center mt-4 text-gray-500">-Loading-</p>
     </div>
   )
 }

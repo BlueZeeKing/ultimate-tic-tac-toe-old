@@ -1,6 +1,6 @@
 .stick {
     width: 2px;
-    height: 50%;
+    height: calc(100% - calc(.2*33vmin));
     background-color: gray;
     text-align: center;
     margin: auto;
@@ -35,11 +35,11 @@
 @keyframes swingOut {
     0% {
         transform: rotate(0deg);
-        animation-timing-function: ease-out;
+        animation-timing-function: cubic-bezier(0,0.2,.2,1);
     }
     25% {
         transform: rotate(25deg);
-        animation-timing-function: ease-in;
+        animation-timing-function: cubic-bezier(0.2,0,1,.2);
     }
     50% {
         transform: rotate(0deg);
@@ -66,11 +66,11 @@
     }
     50% {
         transform: rotate(0deg);
-        animation-timing-function: ease-out;
+        animation-timing-function: cubic-bezier(0,0.2,.2,1);
     }
     75% {
         transform: rotate(-25deg);
-        animation-timing-function: ease-in;
+        animation-timing-function: cubic-bezier(0.2,0,1,.2);
     }
     100% {
         transform: rotate(0deg);
