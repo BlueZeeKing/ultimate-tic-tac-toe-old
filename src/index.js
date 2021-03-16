@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import StartView from './Start';
+import LoadView from './Loading';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <StartView />
+    <LoadView/>
   </React.StrictMode>,
   document.getElementById('root')
 );

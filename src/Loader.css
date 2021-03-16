@@ -1,0 +1,84 @@
+.stick {
+    width: 2px;
+    height: 50%;
+    background-color: gray;
+    text-align: center;
+    margin: auto;
+}
+.ball {
+    width: calc(.2*33vmin);
+    height: calc(.2*33vmin);
+    border-radius: 50%;
+    background-color: #3B82F6;
+    text-align: center;
+    margin: auto;
+}
+.container {
+    text-align: center;
+    width: auto;
+    display: inline-block;
+    transform-origin: 50% 0%;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-delay: 2s;
+    height: 100%;
+}
+
+.first {
+    animation-name: swingOut;
+}
+
+.last {
+    animation-name: swingIn;
+}
+
+@keyframes swingOut {
+    0% {
+        transform: rotate(0deg);
+        animation-timing-function: ease-out;
+    }
+    25% {
+        transform: rotate(25deg);
+        animation-timing-function: ease-in;
+    }
+    50% {
+        transform: rotate(0deg);
+        animation-timing-function: linear;
+    }
+    75% {
+        transform: rotate(0deg);
+        animation-timing-function: linear;
+    }
+    50% {
+        transform: rotate(0deg);
+        animation-timing-function: linear;
+    }
+}
+
+@keyframes swingIn {
+    0% {
+        transform: rotate(0deg);
+        animation-timing-function: linear;
+    }
+    25% {
+        transform: rotate(0deg);
+        animation-timing-function: linear;
+    }
+    50% {
+        transform: rotate(0deg);
+        animation-timing-function: ease-out;
+    }
+    75% {
+        transform: rotate(-25deg);
+        animation-timing-function: ease-in;
+    }
+    100% {
+        transform: rotate(0deg);
+        animation-timing-function: linear;
+    }
+}
+
+.container-main {
+    height: 33vmin;
+    width: 33vmin;
+}
