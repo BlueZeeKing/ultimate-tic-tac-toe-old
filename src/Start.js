@@ -46,7 +46,7 @@ class Form extends React.Component {
   }
 
   submit(e) {
-    this.props.submit(this.state.username, this.state.otherPlayer)
+    this.props.submit(this.state)
   }
 
   render() {

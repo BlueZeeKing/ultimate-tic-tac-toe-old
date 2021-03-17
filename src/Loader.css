@@ -20,22 +20,24 @@
     transform-origin: 50% 0%;
     animation-duration: 2s;
     animation-iteration-count: infinite;
-    animation-delay: 2s;
     height: 100%;
 }
 
-.first {
-    animation-name: swingOut;
+.left {
+    animation-name: swingLeft;
 }
 
-.last {
-    animation-name: swingIn;
+.right {
+    animation-name: swingRight;
+}
+.mid {
+    animation-name: swingMid;
 }
 
-@keyframes swingOut {
+@keyframes swingLeft {
     0% {
         transform: rotate(0deg);
-        animation-timing-function: cubic-bezier(0,0.2,.2,1);
+        animation-timing-function: cubic-bezier(0,0.2,0.2, 1);
     }
     25% {
         transform: rotate(25deg);
@@ -49,13 +51,13 @@
         transform: rotate(0deg);
         animation-timing-function: linear;
     }
-    50% {
+    100% {
         transform: rotate(0deg);
         animation-timing-function: linear;
     }
 }
 
-@keyframes swingIn {
+@keyframes swingRight {
     0% {
         transform: rotate(0deg);
         animation-timing-function: linear;
@@ -63,6 +65,29 @@
     25% {
         transform: rotate(0deg);
         animation-timing-function: linear;
+    }
+    50% {
+        transform: rotate(0deg);
+        animation-timing-function: cubic-bezier(0,0.2,.2,1);
+    }
+    75% {
+        transform: rotate(-25deg);
+        animation-timing-function: cubic-bezier(0.2,0,1,.2);
+    }
+    100% {
+        transform: rotate(0deg);
+        animation-timing-function: linear;
+    }
+}
+
+@keyframes swingMid {
+    0% {
+        transform: rotate(0deg);
+        animation-timing-function: cubic-bezier(0,0.2,0.2, 1);
+    }
+    25% {
+        transform: rotate(25deg);
+        animation-timing-function: cubic-bezier(0.2,0,1,.2);
     }
     50% {
         transform: rotate(0deg);

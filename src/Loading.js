@@ -27,7 +27,7 @@ function LoadView(props) {
 function Loader () {
   return (
     <div className="h-full">
-      <div className="container first">
+      <div className="container left">
         <div className="stick"></div>
         <div className="ball"></div>
       </div>
@@ -43,11 +43,11 @@ function Loader () {
         <div className="stick"></div>
         <div className="ball"></div>
       </div>
-      <div className="container last">
+      <div className="container right">
         <div className="stick"></div>
         <div className="ball"></div>
       </div>
-      <p className="text-xl text-center mt-4 text-gray-500">-Loading-</p>
+      <p className="text-xl text-center mt-4 text-gray-500">-Waiting-</p>
     </div>
   )
 }
