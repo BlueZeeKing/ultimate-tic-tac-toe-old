@@ -3,9 +3,6 @@ import './Loader.css';
 import Header from "./Header.js";
 
 function LoadView(props) {
-  let vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
-
   return(
       <div className = "w-screen h-screen" >
         <Header />
