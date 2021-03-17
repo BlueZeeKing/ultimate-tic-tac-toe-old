@@ -75,8 +75,6 @@ class Settings extends React.Component {
         this.setState({
             toggle: e.target.checked
         })
-
-        console.log(e.target.checked)
     }
 
     close() {

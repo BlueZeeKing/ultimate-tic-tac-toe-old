@@ -3,9 +3,6 @@ import './App.css';
 import Header from "./Header.js";
 
 function GameView(props) {
-  let vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
-
   return(
       <div className = "w-screen h-screen" >
         <Header />
@@ -14,7 +11,7 @@ function GameView(props) {
           <div className="flex flex-row text-center w-full">
             <div className="flex-grow"></div>
             <div className="w-90 h-90">
-              <Game />
+              <Game socket={props.socket} user={props.user}/>
             </div>
             <div className="flex-grow"></div>
           </div>
@@ -37,6 +34,11 @@ class Game extends React.Component {
     }
 
     this.doneHandler = this.doneHandler.bind(this);
+
+    this.props.socket.on('update', function (raw) {
+      let state = JSON.parse(raw)
+      this.setState(state)
+    }.bind(this))
   }
 
   isFull() {
@@ -93,13 +95,14 @@ class Game extends React.Component {
     }
 
     this.setState(state)
+    this.props.socket.emit('update', JSON.stringify(this.state))
   }
 
   render() {
     let board = []
 
     this.state.board.forEach((element, index) => {
-      board.push(<Board key={index} index={index} active={this.state.active === index || this.state.active === 10} currentTurn={this.state.currentTurn} doneHandler={this.doneHandler} board={element} />)
+      board.push(<Board key={index} index={index} active={(this.state.active === index || this.state.active === 10) && this.state.currentTurn === this.props.user} currentTurn={this.state.currentTurn} doneHandler={this.doneHandler} board={element} />)
     });
 
     return (
@@ -122,6 +125,12 @@ class Board extends React.Component {
     this.state.open = !this.isFull() && (this.hasWon() === '')
 
     this.handleClick = this.handleClick.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.board !== prevProps.board) {
+      this.setState({board: this.props.board})
+    }
   }
 
   isFull () {
@@ -156,7 +165,6 @@ class Board extends React.Component {
 
       state.board[e] = this.props.currentTurn
       state.open = !this.isFull() && (this.hasWon() === '')
-      console.log(this.state, this.hasWon())
       this.setState(state)
 
       this.props.doneHandler(this.props.index, e, this.hasWon(), state.open, state.board)
@@ -192,7 +200,6 @@ class Board extends React.Component {
       classes = classes + " highlight"
     }
 
-    //console.log(this.hasWon())
     return (
       <div className={classes}>
         {board}
