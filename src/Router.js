@@ -50,6 +50,7 @@ class Router extends React.Component {
                 })
 
                 this.socket.on('play', function (dataRaw) {
+                    console.log(dataRaw, this.other)
                     let data = JSON.parse(dataRaw)
                     if (data.player === this.other || data.player === this.name) {
                         this.user = data.turn
@@ -61,12 +62,7 @@ class Router extends React.Component {
             }
         }.bind(this, data))
 
-        let formattedData = {
-            username: data.username.trim().toLowerCase(),
-            otherPlayer: data.otherPlayer.trim().toLowerCase()
-        }
-
-        this.socket.emit('login', JSON.stringify(formattedData))
+        this.socket.emit('login', JSON.stringify(data))
     }
 
     render() {

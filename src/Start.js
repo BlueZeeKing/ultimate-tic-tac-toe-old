@@ -44,7 +44,10 @@ class Form extends React.Component {
 
   submit(e) {
     if (this.state.username !== this.state.otherPlayer && !this.props.users.includes(this.state.username)) {
-      this.props.submit(this.state)
+      this.props.submit({
+        username: this.state.username.trim().toLowerCase(),
+        otherPlayer: this.state.otherPlayer.trim().toLowerCase()
+      })
     }
   }
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const port = 8080
-const host = "localhost"
+const host = "0.0.0.0"
 
 const express = require('express') // import all the modules
 const path = require('path');
@@ -43,7 +43,9 @@ io.on('connection', (socket) => { // when a user connects
             console.log(store, users[data.otherPlayer], data.username)
             
             if (data.otherPlayer in users) {
+                console.log('match1')
                 if (store[users[data.otherPlayer]].other === data.username) {
+                    console.log('match2')
                     socket.to(users[data.otherPlayer]).emit("play", JSON.stringify({ player: data.username, turn: 'X' }))
                     socket.emit("play", JSON.stringify({ player: data.username, turn: 'O' }))
                 }
