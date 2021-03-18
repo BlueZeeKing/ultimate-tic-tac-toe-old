@@ -24,6 +24,8 @@ class Router extends React.Component {
             this.setState({
                 users: data
             })
+
+            console.log('start')
         }.bind(this))
 
         let vh = window.innerHeight * 0.01;
@@ -38,6 +40,8 @@ class Router extends React.Component {
     start(data) {
         this.socket.on('login', function(proceed) {
             if (proceed) {
+                this.socket.off('start')
+
                 this.name = data.username
                 this.other = data.otherPlayer
 
@@ -57,7 +61,12 @@ class Router extends React.Component {
             }
         }.bind(this, data))
 
-        this.socket.emit('login', JSON.stringify(data))
+        let formattedData = {
+            username: data.username.trim().toLowerCase(),
+            otherPlayer: data.otherPlayer.trim().toLowerCase()
+        }
+
+        this.socket.emit('login', JSON.stringify(formattedData))
     }
 
     render() {

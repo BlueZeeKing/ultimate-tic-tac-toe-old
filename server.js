@@ -37,10 +37,16 @@ io.on('connection', (socket) => { // when a user connects
 
             users[data.username] = socket.id
             onlineUsers.push(data.username)
+
+            socket.broadcast.emit('start', JSON.stringify(onlineUsers))
+
+            console.log(store, users[data.otherPlayer], data.username)
             
             if (data.otherPlayer in users) {
-                socket.to(users[data.otherPlayer]).emit("play", JSON.stringify({ player: data.username, turn: 'X' }))
-                socket.emit("play", JSON.stringify({ player: data.username, turn: 'O' }))
+                if (store[users[data.otherPlayer]].other === data.username) {
+                    socket.to(users[data.otherPlayer]).emit("play", JSON.stringify({ player: data.username, turn: 'X' }))
+                    socket.emit("play", JSON.stringify({ player: data.username, turn: 'O' }))
+                }
             }
         } else {
             socket.emit('login', false)
@@ -54,7 +60,12 @@ io.on('connection', (socket) => { // when a user connects
     socket.on('disconnect', () => { // when a user diconnects remove the event listeners assoicted with them and remove them from the users list
         if (store[socket.id] !== undefined) {
             delete users[store[socket.id].username]
+            onlineUsers.splice(onlineUsers.indexOf(store[socket.id].username), 1)
             delete store[socket.id]
+
+            socket.broadcast.emit('start', JSON.stringify(onlineUsers))
+
+            console.log(onlineUsers, users, store)
         }
     });
 });

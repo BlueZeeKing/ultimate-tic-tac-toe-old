@@ -49,6 +49,8 @@ class Form extends React.Component {
   }
 
   render() {
+
+    console.log('update')
     let inputList = []
 
     this.props.users.forEach(function (item) {
