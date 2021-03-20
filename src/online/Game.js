@@ -93,7 +93,7 @@ class Game extends React.Component {
 
     state.active = index
 
-    if (!open) {
+    if (state.boardStatus[index] !== '') {
       state.active = 10
     }
 
@@ -113,7 +113,7 @@ class Game extends React.Component {
 
 
     this.state.board.forEach((element, index) => {
-      board.push(<Board key={index} index={index} active={(this.state.active === index || this.state.active === 10) && this.state.currentTurn === this.props.user} currentTurn={this.state.currentTurn} doneHandler={this.doneHandler} board={element} />)
+      board.push(<Board key={index} index={index} active={(this.state.active === index || this.state.active === 10) && this.state.currentTurn === this.props.user && this.state.boardStatus[index] === ''} currentTurn={this.state.currentTurn} doneHandler={this.doneHandler} board={element} />)
     });
 
     return (
