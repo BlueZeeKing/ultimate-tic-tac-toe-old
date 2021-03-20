@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './Offline.css';
 import './Toggle.css';
 
 class App extends React.Component {
@@ -154,7 +154,7 @@ class Game extends React.Component {
   }
 
   isFull(state = this.state) {
-    return !(state.boardStatus.filter(function (item) { return item === 'f' }).length === 9)
+    return state.boardStatus.filter(function (item) { return item === 'f' }).length === 9
   }
 
   hasWon(state = this.state) {
@@ -272,7 +272,9 @@ class Board extends React.Component {
   }
 
   handleClick (e) {
+    console.log('hello')
     if (this.props.active && this.state.open && this.state.board[e] === '') {
+      console.log('hello')
       let state = this.state
 
       state.board[e] = this.props.currentTurn
