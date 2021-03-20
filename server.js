@@ -11,10 +11,10 @@ var users = {}; // set all the variables
 var store = {}; // set all the variables
 var onlineUsers = [];
 
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, 'dist')));
 
 app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 server = app.listen(port, host, function () { // start the server

@@ -1,7 +1,7 @@
-import LoadView from './Loading';
-import GameView from './Game';
 import StartView from './Start';
-import React from 'react';
+const GameView = React.lazy(() => import('./Game'));
+const LoadView = React.lazy(() => import('./Loading'));
+import React, { Suspense } from 'react';
 import { io } from "socket.io-client"
 
 class Router extends React.Component {
@@ -54,6 +54,7 @@ class Router extends React.Component {
                     let data = JSON.parse(dataRaw)
                     if (data.player === this.other || data.player === this.name) {
                         this.user = data.turn
+
                         this.setState({
                             view: "game",
                         })
@@ -72,11 +73,15 @@ class Router extends React.Component {
             )
         } else if (this.state.view === "load") {
             return (
-                <LoadView />
+                <Suspense fallback={<div><Header /><h1 ClassName="w-screen absolute bottom-0 text-6xl m-16 font-extrabold">Loading...</h1></div>}>
+                    <LoadView />
+                </Suspense>
             )
         } else if (this.state.view === "game") {
             return (
-                <GameView socket={this.socket} user={this.user} />
+                <Suspense fallback={<div><Header /><h1 ClassName="w-screen absolute bottom-0 text-6xl m-16 font-extrabold">Loading...</h1></div>}>
+                    <GameView socket={this.socket} user={this.user} />
+                </Suspense>
             )
         }
     }
