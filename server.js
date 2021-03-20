@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const port = 8080
-const host = "0.0.0.0"
+const host = "localhost"
 
 const express = require('express') // import all the modules
 const path = require('path');
