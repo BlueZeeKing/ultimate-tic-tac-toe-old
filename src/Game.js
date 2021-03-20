@@ -26,8 +26,8 @@ class Game extends React.Component {
     super(props)
 
     this.state = {
-      board: [['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', '']],
-      boardStatus: ['', '', '', '', '', '', '', '', ''],
+      board: [['X', 'X', 'X', '', '', '', '', '', ''], ['X', 'X', 'X', '', '', '', '', '', ''], ['X', 'X', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', '']],
+      boardStatus: ['X', 'X', '', '', '', '', '', '', ''],
       active: 10,
       currentTurn: 'X',
       msg: 'It\'s X\'s Turn'
@@ -68,16 +68,15 @@ class Game extends React.Component {
   }
 
   doneHandler(board, index, winner, open, boardData) {
+    console.log(board, index, winner, open, boardData)
     let state = this.state
 
     state.board[board] = boardData
 
     if (open === false && winner !== '') {
       state.boardStatus[board] = winner
-      state.msg = `The winner is ${winner}`
     } else if (open === false) {
       state.boardStatus[board] = 'f'
-      state.msg = 'Tie Game'
     }
 
     if (state.currentTurn === 'X') {
@@ -92,6 +91,14 @@ class Game extends React.Component {
 
     if (state.boardStatus[index] !== '') {
       state.active = 10
+    }
+
+    if (this.hasWon(state) !== '' && this.hasWon(state) !== 'f') {
+      state.active = 9
+      state.msg = `The winner is ${this.hasWon(state)}`
+    } else if (this.isFull(state)) {
+      state.active = 9
+      state.msg = 'Tie Game'
     }
 
     this.setState(state)
