@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import '/Users/braydenzee/Desktop/Projects/Current/ultimate-tic-tac-toe/src/tailwind.css';
 import Router from './Router';
 
 ReactDOM.render(

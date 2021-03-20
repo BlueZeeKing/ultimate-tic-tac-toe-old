@@ -2,9 +2,9 @@ const path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-    entry: './src/index.js',
+    entry: './src/online/index.js',
     output: {
-        filename: 'main.js',
+        filename: 'online.js',
         path: path.resolve(__dirname, 'dist'),
     },
     module: {
