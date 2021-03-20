@@ -26,23 +26,28 @@ class Game extends React.Component {
     super(props)
 
     this.state = {
-      board: [['X', 'X', 'X', '', '', '', '', '', ''], ['X', 'X', 'X', '', '', '', '', '', ''], ['X', 'X', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', '']],
-      boardStatus: ['X', 'X', '', '', '', '', '', '', ''],
+      board: [['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', '']],
+      boardStatus: ['f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', ''],
       active: 10,
       currentTurn: 'X',
       msg: 'It\'s X\'s Turn'
     }
+  }
 
-    this.doneHandler = this.doneHandler.bind(this);
+  componentDidMount() {
+    console.log('mounted')
+    this.doneHandler = this.doneHandlerUnbound.bind(this);
 
     this.props.socket.on('update', function (raw) {
       let state = JSON.parse(raw)
       this.setState(state)
     }.bind(this))
+
+    this.setState({})
   }
 
   isFull() {
-    return !(this.state.boardStatus.filter(function (item) { return item === 'f' }).length === 9)
+    return this.state.boardStatus.filter(function (item) { return item === 'f' }).length === 9
   }
 
   hasWon() {
@@ -67,8 +72,7 @@ class Game extends React.Component {
     }
   }
 
-  doneHandler(board, index, winner, open, boardData) {
-    console.log(board, index, winner, open, boardData)
+  doneHandlerUnbound(board, index, winner, open, boardData) {
     let state = this.state
 
     state.board[board] = boardData
@@ -89,7 +93,7 @@ class Game extends React.Component {
 
     state.active = index
 
-    if (state.boardStatus[index] !== '') {
+    if (!open) {
       state.active = 10
     }
 
@@ -100,13 +104,13 @@ class Game extends React.Component {
       state.active = 9
       state.msg = 'Tie Game'
     }
-
     this.setState(state)
     this.props.socket.emit('update', JSON.stringify(this.state))
   }
 
   render() {
     let board = []
+
 
     this.state.board.forEach((element, index) => {
       board.push(<Board key={index} index={index} active={(this.state.active === index || this.state.active === 10) && this.state.currentTurn === this.props.user} currentTurn={this.state.currentTurn} doneHandler={this.doneHandler} board={element} />)

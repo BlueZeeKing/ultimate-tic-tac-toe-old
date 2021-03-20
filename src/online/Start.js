@@ -70,9 +70,9 @@ class Form extends React.Component {
 
     return (
       <div className="p-12 border-2 border-blue-500 rounded-lg">
-        <input className={classes} value={this.state.username} onChange={this.changeHandler} id="username" name="username" type="text" placeholder="Username" />
+        <input className={classes} value={this.state.username} onChange={this.changeHandler} id="username" name="username" type="text" placeholder="Username" key="username" />
         <br />
-        <input list="other" className={classes} value={this.state.otherPlayer} onChange={this.changeHandler} id="otherPlayer" name="otherPlayer" type="text" placeholder="Other Player" />
+        <input list="other" className={classes} value={this.state.otherPlayer} onChange={this.changeHandler} id="otherPlayer" name="otherPlayer" type="text" placeholder="Other Player" key="otherPlayer" />
         <datalist id="other">
           {inputList}
         </datalist>

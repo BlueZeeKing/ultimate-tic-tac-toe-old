@@ -3,6 +3,7 @@ const GameView = React.lazy(() => import('./Game'));
 const LoadView = React.lazy(() => import('./Loading'));
 import React, { Suspense } from 'react';
 import { io } from "socket.io-client"
+import Header from "./Header.js";
 
 class Router extends React.Component {
     constructor (props) {
@@ -14,16 +15,12 @@ class Router extends React.Component {
             users: []
         }
 
-        this.start = this.start.bind(this)
-
         this.socket = io();
 
         this.socket.on('start', function (dataRaw) {
             let data = JSON.parse(dataRaw)
             
-            this.setState({
-                users: data
-            })
+            this.state.users = data
 
             console.log('start')
         }.bind(this))
@@ -35,6 +32,21 @@ class Router extends React.Component {
             let vh = window.innerHeight * 0.01;
             document.documentElement.style.setProperty('--vh', `${vh}px`);
         });
+
+        this.start = this.start.bind(this)
+    }
+    
+    componentDidMount() {
+        this.socket.off('start')
+        this.socket.on('start', function (dataRaw) {
+            let data = JSON.parse(dataRaw)
+
+            this.setState({
+                users: data
+            })
+
+            console.log('start')
+        }.bind(this))
     }
 
     start(data) {
@@ -73,13 +85,13 @@ class Router extends React.Component {
             )
         } else if (this.state.view === "load") {
             return (
-                <Suspense fallback={<div><Header /><h1 ClassName="w-screen absolute bottom-0 text-6xl m-16 font-extrabold">Loading...</h1></div>}>
+                <Suspense fallback={<div><Header /><h1 className="w-screen absolute bottom-0 text-6xl m-16 font-extrabold">Loading...</h1></div>}>
                     <LoadView />
                 </Suspense>
             )
         } else if (this.state.view === "game") {
             return (
-                <Suspense fallback={<div><Header /><h1 ClassName="w-screen absolute bottom-0 text-6xl m-16 font-extrabold">Loading...</h1></div>}>
+                <Suspense fallback={<div><Header /><h1 className="w-screen absolute bottom-0 text-6xl m-16 font-extrabold">Loading...</h1></div>}>
                     <GameView socket={this.socket} user={this.user} />
                 </Suspense>
             )

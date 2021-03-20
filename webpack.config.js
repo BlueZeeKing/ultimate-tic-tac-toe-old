@@ -2,10 +2,13 @@ const path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-    entry: './src/online/index.js',
+    entry: {
+        online: './src/online/index.js',
+        offline: './src/offline/index.js',
+    },
     output: {
-        filename: 'online.js',
-        path: path.resolve(__dirname, 'dist'),
+        filename: '[name].js',
+        path: __dirname + '/dist',
     },
     module: {
         rules: [
@@ -24,9 +27,7 @@ module.exports = {
             },
         ]
     },
-    plugins: [new webpack.HotModuleReplacementPlugin()],
     devServer: {
         contentBase: path.resolve(__dirname, './dist'),
-        hot: true,
     },
 };
