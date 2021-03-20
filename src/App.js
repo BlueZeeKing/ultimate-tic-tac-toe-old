@@ -143,8 +143,8 @@ class Game extends React.Component {
     super(props)
 
     this.state = {
-      board: [['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', '']],
-      boardStatus: ['', '', '', '', '', '', '', '', ''],
+      board: [['X', 'X', 'X', '', '', '', '', '', ''], ['X', 'X', 'X', '', '', '', '', '', ''], ['X', 'X', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', '']],
+      boardStatus: ['X', 'X', '', '', '', '', '', '', ''],
       active: 10,
       currentTurn: 'X',
       msg: 'It\'s X\'s Turn'
@@ -153,43 +153,42 @@ class Game extends React.Component {
     this.doneHandler = this.doneHandler.bind(this);
   }
 
-  isFull() {
-    return !(this.state.boardStatus.filter(function (item) { return item === 'f' }).length === 9)
+  isFull(state = this.state) {
+    return !(state.boardStatus.filter(function (item) { return item === 'f' }).length === 9)
   }
 
-  hasWon() {
-    if (this.state.boardStatus[0] === this.state.boardStatus[1] && this.state.boardStatus[0] === this.state.boardStatus[2]) {
-      return this.state.boardStatus[0]
-    } else if (this.state.boardStatus[3] === this.state.boardStatus[4] && this.state.boardStatus[3] === this.state.boardStatus[5]) {
-      return this.state.boardStatus[3]
-    } else if (this.state.boardStatus[6] === this.state.boardStatus[7] && this.state.boardStatus[6] === this.state.boardStatus[8]) {
-      return this.state.boardStatus[6]
-    } else if (this.state.boardStatus[0] === this.state.boardStatus[3] && this.state.boardStatus[0] === this.state.boardStatus[6]) {
-      return this.state.boardStatus[0]
-    } else if (this.state.boardStatus[1] === this.state.boardStatus[4] && this.state.boardStatus[1] === this.state.boardStatus[7]) {
-      return this.state.boardStatus[1]
-    } else if (this.state.boardStatus[2] === this.state.boardStatus[5] && this.state.boardStatus[2] === this.state.boardStatus[8]) {
-      return this.state.boardStatus[2]
-    } else if (this.state.boardStatus[0] === this.state.boardStatus[4] && this.state.boardStatus[0] === this.state.boardStatus[8]) {
-      return this.state.boardStatus[0]
-    } else if (this.state.boardStatus[2] === this.state.boardStatus[4] && this.state.boardStatus[2] === this.state.boardStatus[6]) {
-      return this.state.boardStatus[2]
+  hasWon(state = this.state) {
+    if (state.boardStatus[0] === state.boardStatus[1] && state.boardStatus[0] === state.boardStatus[2]) {
+      return state.boardStatus[0]
+    } else if (state.boardStatus[3] === state.boardStatus[4] && state.boardStatus[3] === state.boardStatus[5]) {
+      return state.boardStatus[3]
+    } else if (state.boardStatus[6] === state.boardStatus[7] && state.boardStatus[6] === state.boardStatus[8]) {
+      return state.boardStatus[6]
+    } else if (state.boardStatus[0] === state.boardStatus[3] && state.boardStatus[0] === state.boardStatus[6]) {
+      return state.boardStatus[0]
+    } else if (state.boardStatus[1] === state.boardStatus[4] && state.boardStatus[1] === state.boardStatus[7]) {
+      return state.boardStatus[1]
+    } else if (state.boardStatus[2] === state.boardStatus[5] && state.boardStatus[2] === state.boardStatus[8]) {
+      return state.boardStatus[2]
+    } else if (state.boardStatus[0] === state.boardStatus[4] && state.boardStatus[0] === state.boardStatus[8]) {
+      return state.boardStatus[0]
+    } else if (state.boardStatus[2] === state.boardStatus[4] && state.boardStatus[2] === state.boardStatus[6]) {
+      return state.boardStatus[2]
     } else {
-      return 'f'
+      return ''
     }
   }
 
   doneHandler(board, index, winner, open, boardData) {
+    console.log(board, index, winner, open, boardData)
     let state = this.state
 
     state.board[board] = boardData
 
     if (open === false && winner !== '') {
       state.boardStatus[board] = winner
-      state.msg = `The winner is ${winner}`
     } else if (open === false) {
       state.boardStatus[board] = 'f'
-      state.msg = 'Tie Game'
     }
 
     if (state.currentTurn === 'X') {
@@ -206,6 +205,14 @@ class Game extends React.Component {
       state.active = 10
     }
 
+    if (this.hasWon(state) !== '' && this.hasWon(state) !== 'f') {
+      state.active = 9
+      state.msg = `The winner is ${this.hasWon(state)}`
+    } else if (this.isFull(state)) {
+      state.active = 9
+      state.msg = 'Tie Game'
+    }
+
     this.setState(state)
   }
 
@@ -213,7 +220,7 @@ class Game extends React.Component {
     let board = []
 
     this.state.board.forEach((element, index) => {
-      board.push(<Board key={index} index={index} active={this.state.active === index || this.state.active === 10} currentTurn={this.state.currentTurn} doneHandler={this.doneHandler} board={element} />)
+      board.push(<Board key={index} index={index} active={(this.state.active === index || this.state.active === 10) && this.state.currentTurn === this.props.user && this.state.boardStatus[index] === ''} currentTurn={this.state.currentTurn} doneHandler={this.doneHandler} board={element} />)
     });
 
     return (
