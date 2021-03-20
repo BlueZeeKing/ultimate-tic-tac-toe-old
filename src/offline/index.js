@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'src/online/tailwind.css';
+import './tailwind.css';
 import App from './Offline';
 
 ReactDOM.render(
