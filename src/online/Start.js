@@ -77,7 +77,21 @@ class Form extends React.Component {
           {inputList}
         </datalist>
         <br />
-        <button className="m-1 my-4 border-blue-500 border-2 rounded text-blue-500 focus:text-white bg-white focus:bg-blue-500 px-4 p-1 transition duration-200 outline-none focus:outline-none" onClick={this.submit}>Play</button>
+        <button className="m-1 my-4 border-blue-500 border-2 rounded text-blue-500 focus:text-white bg-white focus:bg-blue-500 px-4 p-1 transition duration-200 outline-none focus:outline-none" onClick={this.submit}>Play Online</button>
+        <div className="flex flex-row w-full">
+          <div className="flex flex-col flex-grow h-6 px-2">
+            <div className="flex-grow"></div>
+            <div className="w-full border-t border-gray-400 h-0 margin-auto"></div>
+            <div className="flex-grow"></div>
+          </div>
+          <div className="">Or</div>
+          <div className="flex flex-col flex-grow h-6 px-2">
+            <div className="flex-grow"></div>
+            <div className="w-full border-t border-gray-400 h-0 margin-auto"></div>
+            <div className="flex-grow"></div>
+          </div>
+        </div>
+        <a href="/offline"><button className="m-1 my-4 border-blue-500 border-2 rounded text-blue-500 focus:text-white bg-white focus:bg-blue-500 px-4 p-1 transition duration-200 outline-none focus:outline-none">Play Offline</button></a>
       </div>
     )
   }

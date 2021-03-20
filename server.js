@@ -17,10 +17,6 @@ app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, 'dist', 'online.html'));
 });
 
-app.get('/online', function (req, res) {
-    res.sendFile(path.join(__dirname, 'dist', 'online.html'));
-});
-
 app.get('/offline', function (req, res) {
     res.sendFile(path.join(__dirname, 'dist', 'offline.html'));
 });
