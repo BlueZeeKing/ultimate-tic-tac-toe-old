@@ -1,5 +1,6 @@
 const path = require('path');
 var webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -9,6 +10,7 @@ module.exports = {
     output: {
         filename: '[name].js',
         path: __dirname + '/dist',
+        clean: true,
     },
     module: {
         rules: [
@@ -27,6 +29,17 @@ module.exports = {
             },
         ]
     },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: 'src/template.html',
+            chunks: ['online']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'offline.html',
+            template: 'src/template.html',
+            chunks: ['offline']
+        })
+    ],
     devServer: {
         contentBase: path.resolve(__dirname, './dist'),
     },
