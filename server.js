@@ -11,14 +11,14 @@ var users = {}; // set all the variables
 var store = {}; // set all the variables
 var onlineUsers = [];
 
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, 'build')));
 
 app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 app.get('/offline', function (req, res) {
-    res.sendFile(path.join(__dirname, 'dist', 'offline.html'));
+    res.sendFile(path.join(__dirname, 'build', 'offline.html'));
 });
 
 server = app.listen(port, host, function () { // start the server
