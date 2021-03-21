@@ -27,17 +27,21 @@ module.exports = {
                 exclude: /node_modules/,
                 use: ['babel-loader'],
             },
+            {
+                test: /\.ico$/,
+                loader: 'file-loader'
+            }
         ]
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: 'src/template.html',
-            chunks: ['online'],
+            chunks: ['online']
         }),
         new HtmlWebpackPlugin({
             filename: 'offline.html',
             template: 'src/template.html',
-            chunks: ['offline'],
+            chunks: ['offline']
         })
     ],
     devServer: {
