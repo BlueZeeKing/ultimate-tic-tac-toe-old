@@ -9,7 +9,7 @@ module.exports = {
     },
     output: {
         filename: '[name].js',
-        path: __dirname + '/dist',
+        path: __dirname + '/build',
         clean: true,
     },
     module: {
@@ -32,12 +32,12 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: 'src/template.html',
-            chunks: ['online']
+            chunks: ['online'],
         }),
         new HtmlWebpackPlugin({
             filename: 'offline.html',
             template: 'src/template.html',
-            chunks: ['offline']
+            chunks: ['offline'],
         })
     ],
     devServer: {

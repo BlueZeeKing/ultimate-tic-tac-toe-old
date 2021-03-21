@@ -46,27 +46,27 @@ class Game extends React.Component {
     this.setState({})
   }
 
-  isFull() {
-    return this.state.boardStatus.filter(function (item) { return item === 'f' }).length === 9
+  isFull(state = this.state) {
+    return state.boardStatus.filter(function (item) { return item === 'f' }).length === 9
   }
 
-  hasWon() {
-    if (this.state.boardStatus[0] === this.state.boardStatus[1] && this.state.boardStatus[0] === this.state.boardStatus[2]) {
-      return this.state.boardStatus[0]
-    } else if (this.state.boardStatus[3] === this.state.boardStatus[4] && this.state.boardStatus[3] === this.state.boardStatus[5]) {
-      return this.state.boardStatus[3]
-    } else if (this.state.boardStatus[6] === this.state.boardStatus[7] && this.state.boardStatus[6] === this.state.boardStatus[8]) {
-      return this.state.boardStatus[6]
-    } else if (this.state.boardStatus[0] === this.state.boardStatus[3] && this.state.boardStatus[0] === this.state.boardStatus[6]) {
-      return this.state.boardStatus[0]
-    } else if (this.state.boardStatus[1] === this.state.boardStatus[4] && this.state.boardStatus[1] === this.state.boardStatus[7]) {
-      return this.state.boardStatus[1]
-    } else if (this.state.boardStatus[2] === this.state.boardStatus[5] && this.state.boardStatus[2] === this.state.boardStatus[8]) {
-      return this.state.boardStatus[2]
-    } else if (this.state.boardStatus[0] === this.state.boardStatus[4] && this.state.boardStatus[0] === this.state.boardStatus[8]) {
-      return this.state.boardStatus[0]
-    } else if (this.state.boardStatus[2] === this.state.boardStatus[4] && this.state.boardStatus[2] === this.state.boardStatus[6]) {
-      return this.state.boardStatus[2]
+  hasWon(state = this.state) {
+    if (state.boardStatus[0] !== '' && state.boardStatus[0] !== 'f' && state.boardStatus[0] === state.boardStatus[1] && state.boardStatus[0] === state.boardStatus[2]) {
+      return state.boardStatus[0]
+    } else if (state.boardStatus[0] !== '' && state.boardStatus[0] !== 'f' && state.boardStatus[3] === state.boardStatus[4] && state.boardStatus[3] === state.boardStatus[5]) {
+      return state.boardStatus[3]
+    } else if (state.boardStatus[0] !== '' && state.boardStatus[0] !== 'f' && state.boardStatus[6] === state.boardStatus[7] && state.boardStatus[6] === state.boardStatus[8]) {
+      return state.boardStatus[6]
+    } else if (state.boardStatus[0] !== '' && state.boardStatus[0] !== 'f' && state.boardStatus[0] === state.boardStatus[3] && state.boardStatus[0] === state.boardStatus[6]) {
+      return state.boardStatus[0]
+    } else if (state.boardStatus[0] !== '' && state.boardStatus[0] !== 'f' && state.boardStatus[1] === state.boardStatus[4] && state.boardStatus[1] === state.boardStatus[7]) {
+      return state.boardStatus[1]
+    } else if (state.boardStatus[0] !== '' && state.boardStatus[0] !== 'f' && state.boardStatus[2] === state.boardStatus[5] && state.boardStatus[2] === state.boardStatus[8]) {
+      return state.boardStatus[2]
+    } else if (state.boardStatus[0] !== '' && state.boardStatus[0] !== 'f' && state.boardStatus[0] === state.boardStatus[4] && state.boardStatus[0] === state.boardStatus[8]) {
+      return state.boardStatus[0]
+    } else if (state.boardStatus[0] !== '' && state.boardStatus[0] !== 'f' && state.boardStatus[2] === state.boardStatus[4] && state.boardStatus[2] === state.boardStatus[6]) {
+      return state.boardStatus[2]
     } else {
       return 'f'
     }
