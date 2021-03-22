@@ -3,7 +3,7 @@ import './Online.css';
 import Header from "./Header.js";
 
 function GameView(props) {
-  return(
+  return (
       <div className = "w-screen h-screen" >
         <Header />
         <div className="flex flex-col text-center h-full w-full">
