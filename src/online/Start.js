@@ -91,7 +91,7 @@ class Form extends React.Component {
             <div className="flex-grow"></div>
           </div>
         </div>
-        <a href="/offline"><button className="m-1 my-4 border-blue-500 border-2 rounded text-blue-500 focus:text-white bg-white focus:bg-blue-500 px-4 p-1 transition duration-200 outline-none focus:outline-none">Play Offline</button></a>
+        <a href="/offline.html"><button className="m-1 my-4 border-blue-500 border-2 rounded text-blue-500 focus:text-white bg-white focus:bg-blue-500 px-4 p-1 transition duration-200 outline-none focus:outline-none">Play Offline</button></a>
       </div>
     )
   }
